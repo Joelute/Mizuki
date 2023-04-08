@@ -5,13 +5,13 @@ const { MessageEmbed } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('awoo')
-		.setDescription('awoo to someone')
+		.setDescription('bully someone cause why not')
 		.addUserOption((option) =>
 			option.setName('user')
-				.setDescription('Who do you want to awoo to?')
+				.setDescription('Who do you want to bully?')
 				.setRequired(false)),
 	async execute(interaction) {
-		axios.get('https://api.waifu.pics/sfw/awoo')
+		axios.get('https://api.waifu.pics/sfw/bully')
 			.then((res) => {
 				const user = interaction.options.getMember('user');
 				let embed;
@@ -19,13 +19,13 @@ module.exports = {
 				if (user && interaction.member.id !== user.id) {
 					embed = new MessageEmbed()
 						.setColor('ORANGE')
-						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} awoos to ${user.nickname ? user.nickname : user.user.username}`)
+						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} is bullying ${user.nickname ? user.nickname : user.user.username}`)
 						.setImage(`${res.data.url}`);
 				}
 				else {
 					embed = new MessageEmbed()
 						.setColor('ORANGE')
-						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} awoos`)
+						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username}`)
 						.setImage(`${res.data.url}`);
 				}
 

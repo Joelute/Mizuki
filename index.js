@@ -1,10 +1,12 @@
 const fs = require('node:fs');
 const { Client, Intents, Collection } = require('discord.js');
-const token = process.env.DISCORD_TOKEN;
-const dotenv = require('dotenv');
+const express = require('express');
+const dotenv = require('dotenv')
+dotenv.config()
 
-dotenv.config();
+const token = process.env.DISCORD_TOKEN
 
+// Discord Client things
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 const eventFiles = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
@@ -43,4 +45,31 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
+// Express request things
+
+const app = express();
+app.use(express.json());
+
+
+// End point for github-webhooks. This will take the payload
+// and send it straight into the given discord channel.
+app.post('/github-webhook', (req, res) => {
+	const payload = req.body;
+	const webhookChannelID = "888233572949975090";
+	const webhookChannel = client.channels.cache.get(webhookChannelID);
+  
+	if (webhookChannel && webhookChannel.type === 'text') {
+	  webhookChannel.send(`Received payload:\n\`\`\`${JSON.stringify(payload)}\`\`\``);
+	}
+	
+	// Backend response to client
+	// TODO: Maybe change this up to better give more info and more 
+	// up to standards.
+	res.send('Received');
+});
+  
 client.login(token);
+const PORT = 3000;
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
+});

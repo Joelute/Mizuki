@@ -19,13 +19,13 @@ module.exports = {
 				if (user && interaction.member.id !== user.id) {
 					embed = new MessageEmbed()
 						.setColor('ORANGE')
-						.setTitle(`${user.nickname ? user.nickname : user.user.username} made ${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} cry`)
+						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} is bullying ${user.nickname ? user.nickname : user.user.username}`)
 						.setImage(`${res.data.url}`);
 				}
 				else {
 					embed = new MessageEmbed()
 						.setColor('ORANGE')
-						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} is crying...`)
+						.setTitle(`${interaction.member.nickname ? interaction.member.nickname : interaction.member.username} is bullying themselves`)
 						.setImage(`${res.data.url}`);
 				}
 
