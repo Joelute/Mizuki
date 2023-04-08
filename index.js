@@ -1,5 +1,5 @@
 const fs = require('node:fs');
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, Collection } = require('discord.js');
 const express = require('express');
 const dotenv = require('dotenv')
 dotenv.config()
@@ -7,7 +7,7 @@ dotenv.config()
 const token = process.env.DISCORD_TOKEN
 
 // Discord Client things
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds], partials: [Partials.Channel] });
 
 const eventFiles = fs.readdirSync('./events/').filter(file => file.endsWith('.js'));
 
